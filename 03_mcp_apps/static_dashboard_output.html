@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src data:;">
+<title>Fresh Squeeze Lemonade Dashboard</title>
+<style>
+  :root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; }
+  body { margin: 0; padding: 20px; box-sizing: border-box; }
+  .card { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; margin-bottom: 16px; }
+  .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-top: 16px; }
+  .metric-box { background: #0f172a; border-radius: 8px; padding: 14px; border-left: 4px solid #facc15; }
+  .metric-label { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+  .metric-val { font-size: 24px; font-weight: bold; color: #f8fafc; margin-top: 4px; }
+  .inventory-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  .inventory-table th, .inventory-table td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #334155; font-size: 14px; }
+  .badge { display: inline-block; padding: 3px 8px; border-radius: 9999px; font-size: 11px; font-weight: 600; background: #22c55e20; color: #4ade80; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="header">
+    <h2 style="margin:0; color:#facc15;">🍋 Fresh Squeeze Lemonade Stand</h2>
+    <span class="badge" id="status-badge">ONLINE • STAND 1</span>
+  </div>
+  <div class="grid">
+    <div class="metric-box">
+      <div class="metric-label">Daily Revenue</div>
+      <div class="metric-val" id="rev-val">$342.50</div>
+    </div>
+    <div class="metric-box" style="border-left-color: #38bdf8;">
+      <div class="metric-label">Cups Dispensed</div>
+      <div class="metric-val" id="cups-val">137</div>
+    </div>
+    <div class="metric-box" style="border-left-color: #f97316;">
+      <div class="metric-label">Ambient Temp</div>
+      <div class="metric-val" id="temp-val">82°F</div>
+    </div>
+    <div class="metric-box" style="border-left-color: #a855f7;">
+      <div class="metric-label">Customer Rating</div>
+      <div class="metric-val" id="rating-val">4.8 ★</div>
+    </div>
+  </div>
+  <h4 style="margin: 20px 0 8px 0; color:#cbd5e1;">Stock & Supplies</h4>
+  <table class="inventory-table">
+    <thead>
+      <tr><th>Supply Item</th><th>In Stock</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Fresh Lemons</td><td id="inv-lemons">48 units</td><td><span class="badge">Healthy</span></td></tr>
+      <tr><td>Organic Sugar</td><td id="inv-sugar">12.5 kg</td><td><span class="badge">Healthy</span></td></tr>
+      <tr><td>Crushed Ice</td><td id="inv-ice">8 bags</td><td><span class="badge">Healthy</span></td></tr>
+      <tr><td>Compostable Cups</td><td id="inv-cups">120 units</td><td><span class="badge">Healthy</span></td></tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  window.addEventListener('message', (event) => {
+    if (!event.data || event.data.type !== 'MCP_DATA_UPDATE') return;
+    const d = event.data.payload;
+    if (d && d.metrics) {
+      if (d.metrics.daily_revenue) document.getElementById('rev-val').textContent = '$' + d.metrics.daily_revenue.toFixed(2);
+      if (d.metrics.cups_sold) document.getElementById('cups-val').textContent = d.metrics.cups_sold;
+      if (d.metrics.temperature_f) document.getElementById('temp-val').textContent = d.metrics.temperature_f + '°F';
+    }
+  });
+</script>
+</body>
+</html>

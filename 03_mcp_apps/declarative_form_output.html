@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src data:;">
+<title>Dynamic MCP App Form</title>
+<style>
+  body { margin: 0; padding: 20px; font-family: system-ui, sans-serif; background: #0f172a; color: #f8fafc; }
+  .form-card { background: #1e293b; padding: 20px; border-radius: 10px; border: 1px solid #334155; }
+  .field { margin-bottom: 14px; }
+  label { display: block; font-size: 13px; font-weight: 600; color: #94a3b8; margin-bottom: 6px; }
+  input[type="number"], input[type="text"] { width: 100%; box-sizing: border-box; padding: 8px 12px; background: #0f172a; border: 1px solid #475569; border-radius: 6px; color: #f8fafc; font-size: 14px; }
+  .checkbox-field { display: flex; align-items: center; gap: 8px; }
+  .checkbox-field label { margin: 0; }
+  button { background: #facc15; color: #854d0e; border: none; font-weight: bold; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; width: 100%; }
+  button:hover { background: #eab308; }
+  #order-result { margin-top: 16px; padding: 12px; border-radius: 6px; background: #0f172a; border-left: 4px solid #22c55e; display: none; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="form-card">
+  <h3 style="margin-top:0; color:#facc15;">📦 Dynamic Supply Re-Order Form</h3>
+  <p style="font-size:12px; color:#94a3b8;">Generated dynamically from MCP tool schema for <code>order_supplies</code>.</p>
+  <form id="order-form">
+    <div class="field">
+      <label>Lemons (units):</label>
+      <input type="number" id="lemons" value="30" min="1" max="500">
+    </div>
+    <div class="field">
+      <label>Organic Sugar (kg):</label>
+      <input type="number" id="sugar_kg" value="5.0" step="0.5" min="0.5">
+    </div>
+    <div class="field">
+      <label>Ice (bags):</label>
+      <input type="number" id="ice_bags" value="5" min="1">
+    </div>
+    <div class="field">
+      <label>Cups (units):</label>
+      <input type="number" id="cups" value="50" min="10">
+    </div>
+    <div class="field checkbox-field">
+      <input type="checkbox" id="rush_delivery">
+      <label for="rush_delivery">Rush 2-Hour Delivery (+$10)</label>
+    </div>
+    <button type="submit" id="submit-btn">Dispatch Order via PostMessage Bridge</button>
+  </form>
+  <div id="order-result"></div>
+</div>
+<script>
+  const form = document.getElementById('order-form');
+  const resultDiv = document.getElementById('order-result');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const args = {
+      lemons: parseInt(document.getElementById('lemons').value, 10),
+      sugar_kg: parseFloat(document.getElementById('sugar_kg').value),
+      ice_bags: parseInt(document.getElementById('ice_bags').value, 10),
+      cups: parseInt(document.getElementById('cups').value, 10),
+      rush_delivery: document.getElementById('rush_delivery').checked
+    };
+
+    // Send JSON-RPC call-tool request to host window
+    window.parent.postMessage({
+      jsonrpc: "2.0",
+      id: "req-" + Date.now(),
+      method: "ui/call-tool",
+      params: {
+        name: "order_supplies",
+        arguments: args
+      }
+    }, "*");
+  });
+
+  window.addEventListener('message', (event) => {
+    if (!event.data) return;
+    if (event.data.method === "ui/tool-result" || (event.data.result && event.data.result.structuredContent)) {
+      const res = event.data.result || event.data.params;
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = '<strong>Order Confirmed:</strong> ' + JSON.stringify(res.structuredContent || res);
+    }
+  });
+</script>
+</body>
+</html>

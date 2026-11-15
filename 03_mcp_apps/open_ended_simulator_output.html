@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src data:;">
+<title>Lemonade Dynamic Pricing Simulator</title>
+<style>
+  body { margin: 0; padding: 20px; font-family: -apple-system, sans-serif; background: #0f172a; color: #f8fafc; }
+  .sim-container { background: #1e293b; padding: 24px; border-radius: 12px; border: 1px solid #334155; }
+  .slider-row { margin: 16px 0; }
+  .slider-header { display: flex; justify-content: space-between; font-size: 13px; color: #94a3b8; margin-bottom: 4px; }
+  input[type="range"] { width: 100%; accent-color: #facc15; }
+  .output-panel { background: #0f172a; border-radius: 8px; padding: 16px; margin-top: 20px; border-left: 4px solid #facc15; display: flex; justify-content: space-around; }
+  .stat { text-align: center; }
+  .stat-val { font-size: 26px; font-weight: bold; color: #facc15; }
+  .stat-label { font-size: 12px; color: #94a3b8; }
+</style>
+</head>
+<body>
+<div class="sim-container">
+  <h3 style="margin-top:0; color:#facc15;">📊 Open-Ended Dynamic Pricing Lab</h3>
+  <div class="slider-row">
+    <div class="slider-header"><span>Cup Price ($)</span><span id="price-lbl">$2.50</span></div>
+    <input type="range" id="price-slider" min="1.0" max="5.0" step="0.25" value="2.50">
+  </div>
+  <div class="slider-row">
+    <div class="slider-header"><span>Weather Temp (°F)</span><span id="temp-lbl">85°F</span></div>
+    <input type="range" id="temp-slider" min="65" max="105" step="1" value="85">
+  </div>
+  <div class="slider-row">
+    <div class="slider-header"><span>Foot Traffic Factor</span><span id="traffic-lbl">1.2x</span></div>
+    <input type="range" id="traffic-slider" min="0.5" max="2.5" step="0.1" value="1.2">
+  </div>
+  <div class="output-panel">
+    <div class="stat">
+      <div class="stat-val" id="cups-proj">120</div>
+      <div class="stat-label">Projected Cups</div>
+    </div>
+    <div class="stat">
+      <div class="stat-val" id="rev-proj">$300.00</div>
+      <div class="stat-label">Projected Revenue</div>
+    </div>
+  </div>
+</div>
+<script>
+  const priceS = document.getElementById('price-slider');
+  const tempS = document.getElementById('temp-slider');
+  const trafficS = document.getElementById('traffic-slider');
+
+  function update() {
+    const p = parseFloat(priceS.value);
+    const t = parseFloat(tempS.value);
+    const tf = parseFloat(trafficS.value);
+    document.getElementById('price-lbl').textContent = '$' + p.toFixed(2);
+    document.getElementById('temp-lbl').textContent = t + '°F';
+    document.getElementById('traffic-lbl').textContent = tf.toFixed(1) + 'x';
+
+    const cups = Math.max(10, Math.round((t - 60) * 4 * tf / (p / 2.0)));
+    const rev = cups * p;
+    document.getElementById('cups-proj').textContent = cups;
+    document.getElementById('rev-proj').textContent = '$' + rev.toFixed(2);
+
+    // Notify host of context update
+    window.parent.postMessage({
+      jsonrpc: "2.0",
+      id: "sim-" + Date.now(),
+      method: "ui/update-model-context",
+      params: { projected_cups: cups, projected_revenue: rev, cup_price: p }
+    }, "*");
+  }
+
+  priceS.addEventListener('input', update);
+  tempS.addEventListener('input', update);
+  trafficS.addEventListener('input', update);
+</script>
+</body>
+</html>

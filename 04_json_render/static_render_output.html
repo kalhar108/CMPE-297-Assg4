@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none';">
+<title>JSON Render Multi-Target View</title>
+<style>
+  :root { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0f172a; color: #f8fafc; }
+  body { margin: 0; padding: 24px; box-sizing: border-box; }
+  .card { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; margin-bottom: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); }
+  .card-primary { border-left: 4px solid #38bdf8; }
+  .card-accent { border-left: 4px solid #facc15; }
+  .card-header h3 { margin: 0 0 4px 0; color: #f8fafc; }
+  .subtitle { font-size: 13px; color: #94a3b8; }
+  .metric-box { background: #0f172a; border-radius: 8px; padding: 14px 18px; border: 1px solid #334155; min-width: 140px; }
+  .metric-label { font-size: 11px; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.05em; }
+  .metric-value { font-size: 24px; font-weight: bold; color: #f8fafc; margin-top: 4px; display: flex; align-items: center; gap: 8px; }
+  .trend-up { color: #4ade80; font-size: 14px; }
+  .trend-down { color: #f87171; font-size: 14px; }
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 14px; }
+  .data-table th, .data-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid #334155; }
+  .data-table th { background: #0f172a; color: #38bdf8; }
+  .btn { padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none; font-size: 13px; transition: background 0.2s; }
+  .btn-primary { background: #38bdf8; color: #0f172a; }
+  .btn-default { background: #334155; color: #f8fafc; }
+  .chart-card { background: #0f172a; border-radius: 8px; padding: 14px; border: 1px solid #334155; }
+  .bar-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; font-size: 12px; }
+  .bar { height: 16px; background: #38bdf8; border-radius: 3px; }
+  .code-block { background: #020617; padding: 14px; border-radius: 8px; font-family: monospace; color: #4ade80; overflow-x: auto; }
+</style>
+</head>
+<body>
+<div id="root-container">
+<div class="container" style="display:flex; flex-direction:column; gap:16px;"><div class="card card-primary">
+  <div class="card-header">
+    <h3>Cloud Infrastructure Fleet Overview</h3>
+    <div class="subtitle">Silicon Valley Regional Cluster — Zone us-west-1</div>
+  </div>
+  <div class="card-body"><div class="container" style="display:flex; flex-direction:row; gap:12px;"><div class="metric-box">
+  <div class="metric-label">Active Compute Nodes</div>
+  <div class="metric-value">128 <span class="metric-delta trend-up">▲ +12</span></div>
+</div><div class="metric-box">
+  <div class="metric-label">Fleet Health Score</div>
+  <div class="metric-value">99.8% <span class="metric-delta trend-up">▲ +0.4%</span></div>
+</div></div></div>
+</div><div class="container" style="display:flex; flex-direction:row; gap:12px;"><div class="metric-box">
+  <div class="metric-label">CPU Utilization</div>
+  <div class="metric-value">42.5% <span class="metric-delta trend-down">▼ -3.1%</span></div>
+</div><div class="metric-box">
+  <div class="metric-label">Memory Allocated</div>
+  <div class="metric-value">384 GB <span class="metric-delta trend-up">▲ +8 GB</span></div>
+</div><div class="metric-box">
+  <div class="metric-label">P99 Gateway Latency</div>
+  <div class="metric-value">14 ms <span class="metric-delta trend-neutral">steady</span></div>
+</div></div><div class="card card-default">
+  <div class="card-header">
+    <h3>Primary Service Topologies</h3>
+    
+  </div>
+  <div class="card-body"><table class="data-table">
+  <thead><tr><th>Service Name</th><th>Pods</th><th>Version</th><th>Status</th></tr></thead>
+  <tbody><tr><td>gateway-proxy</td><td>8</td><td>v2.4.1</td><td>RUNNING</td></tr><tr><td>auth-authenticator</td><td>4</td><td>v1.9.0</td><td>RUNNING</td></tr><tr><td>billing-engine</td><td>3</td><td>v3.1.2</td><td>RUNNING</td></tr><tr><td>event-bus-kafka</td><td>6</td><td>v3.7.0</td><td>HEALTHY</td></tr></tbody>
+</table></div>
+</div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src data:;">
+<title>Mixed Mode MCP App Container</title>
+<style>
+  body { margin:0; padding:20px; font-family:system-ui, sans-serif; background:#0f172a; color:#f8fafc; }
+  .container { background:#1e293b; padding:20px; border-radius:12px; border:1px solid #334155; }
+  .catalog-shell { display:flex; gap:12px; margin-bottom:16px; }
+  .shell-card { background:#0f172a; padding:12px 18px; border-radius:8px; border-left:4px solid #38bdf8; flex:1; }
+  .nested-frame-wrapper { border:1px dashed #64748b; border-radius:8px; padding:12px; background:#020617; }
+  iframe { width:100%; height:130px; border:none; border-radius:6px; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h3 style="margin-top:0; color:#facc15;">🔀 Hybrid MCP App (Double Boundary Sandbox)</h3>
+  <div class="catalog-shell">
+    <div class="shell-card">
+      <div style="font-size:11px; color:#94a3b8;">CATALOG KPI</div>
+      <div style="font-size:20px; font-weight:bold;">$500.00 Target</div>
+    </div>
+    <div class="shell-card" style="border-left-color:#22c55e;">
+      <div style="font-size:11px; color:#94a3b8;">PROGRESS</div>
+      <div style="font-size:20px; font-weight:bold;">68.5% Achieved</div>
+    </div>
+  </div>
+  <div class="nested-frame-wrapper">
+    <div style="font-size:12px; color:#94a3b8; margin-bottom:6px;">Nested Secondary Sandbox Frame:</div>
+    <iframe id="nested-gen-frame" sandbox="allow-scripts"></iframe>
+  </div>
+</div>
+<script>
+  window.addEventListener('message', (event) => {
+    // Bubble up nested frame messages to the host window
+    if (event.data && event.data.method === 'ui/update-model-context') {
+      window.parent.postMessage(event.data, '*');
+    }
+    if (event.data && event.data.type === 'MOUNT_GENERATED_HTML') {
+      const frame = document.getElementById('nested-gen-frame');
+      frame.srcdoc = event.data.html;
+    }
+  });
+</script>
+</body>
+</html>
