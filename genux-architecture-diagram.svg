@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1120" viewBox="0 0 1400 1120" role="img" aria-labelledby="title desc">
+  <title id="title">GenUX codelabs architecture</title>
+  <desc id="desc">A flow diagram connecting the user, React frontend, AG-UI endpoint, harness loop, MCP server, UI planner, static, declarative, and open-ended rendering modes.</desc>
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#d9dee8"/>
+    </marker>
+    <style>
+      .bg { fill: #0d1117; }
+      .node { fill: #242424; stroke: #aeb4bd; stroke-width: 2; filter: url(#shadow); }
+      .label { fill: #f1f3f5; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 20px; text-anchor: middle; dominant-baseline: middle; }
+      .small { font-size: 17px; }
+      .edge { fill: none; stroke: #d9dee8; stroke-width: 2.5; marker-end: url(#arrow); }
+      .tag-bg { fill: #737373; opacity: .9; }
+      .tag { fill: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 16px; text-anchor: middle; dominant-baseline: middle; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1400" height="1120" rx="18"/>
+
+  <!-- Nodes -->
+  <g>
+    <rect class="node" x="590" y="35" width="220" height="70" rx="4"/>
+    <text class="label" x="700" y="70">User</text>
+
+    <rect class="node" x="560" y="150" width="280" height="120" rx="4"/>
+    <text class="label" x="700" y="190">
+      <tspan x="700" dy="0">Frontend:</tspan>
+      <tspan x="700" dy="28">React + @ag-</tspan>
+      <tspan x="700" dy="28">ui/client</tspan>
+    </text>
+
+    <rect class="node" x="330" y="400" width="220" height="100" rx="4"/>
+    <text class="label" x="440" y="440">
+      <tspan x="440" dy="0">AG-UI endpoint:</tspan>
+      <tspan x="440" dy="28">SSE</tspan>
+    </text>
+
+    <rect class="node" x="330" y="575" width="220" height="140" rx="4"/>
+    <text class="label" x="440" y="620">
+      <tspan x="440" dy="0">Harness loop:</tspan>
+      <tspan x="440" dy="28">model +</tspan>
+      <tspan x="440" dy="28">allowlisted tools</tspan>
+    </text>
+
+    <rect class="node" x="250" y="820" width="250" height="170" rx="4"/>
+    <text class="label" x="375" y="860">
+      <tspan x="375" dy="0">MCP server:</tspan>
+      <tspan x="375" dy="28">search / details</tspan>
+      <tspan x="375" dy="28">/ compare /</tspan>
+      <tspan x="375" dy="28">summary</tspan>
+    </text>
+
+    <rect class="node" x="620" y="830" width="220" height="70" rx="4"/>
+    <text class="label" x="730" y="865">UI planner</text>
+
+    <rect class="node" x="520" y="355" width="220" height="70" rx="4"/>
+    <text class="label" x="630" y="390">Static: ItemCard</text>
+
+    <rect class="node" x="760" y="555" width="260" height="120" rx="4"/>
+    <text class="label" x="890" y="592">
+      <tspan x="890" dy="0">Declarative:</tspan>
+      <tspan x="890" dy="28">validate</tspan>
+      <tspan x="890" dy="28">JsonRender</tspan>
+    </text>
+
+    <rect class="node" x="1035" y="400" width="250" height="120" rx="4"/>
+    <text class="label" x="1160" y="437">
+      <tspan x="1160" dy="0">Open-ended:</tspan>
+      <tspan x="1160" dy="28">SandboxedHtml</tspan>
+      <tspan x="1160" dy="28">iframe</tspan>
+    </text>
+  </g>
+
+  <!-- Edges -->
+  <g class="edge">
+    <path d="M700 105 V150"/>
+    <path d="M560 210 C470 210 440 300 440 400"/>
+    <path d="M560 245 C500 245 500 350 500 400"/>
+    <path d="M840 210 C960 210 1160 290 1160 400"/>
+    <path d="M700 270 V355"/>
+    <path d="M650 270 V325 C650 340 630 340 630 355"/>
+    <path d="M745 270 V510 C745 530 890 530 890 555"/>
+    <path d="M440 500 V575"/>
+    <path d="M440 715 V820"/>
+    <path d="M500 650 C585 650 585 865 620 865"/>
+    <path d="M375 820 V775 C375 750 440 750 440 715"/>
+    <path d="M500 905 C560 905 560 865 620 865"/>
+    <path d="M730 830 V745 C730 700 630 700 630 425"/>
+  </g>
+
+  <!-- Edge labels -->
+  <g>
+    <rect class="tag-bg" x="275" y="300" width="170" height="30" rx="2"/>
+    <text class="tag" x="360" y="315">POST RunAgentInput</text>
+    <rect class="tag-bg" x="455" y="332" width="90" height="30" rx="2"/>
+    <text class="tag" x="500" y="347">next run</text>
+    <rect class="tag-bg" x="790" y="490" width="115" height="30" rx="2"/>
+    <text class="tag" x="847" y="505">named action</text>
+    <rect class="tag-bg" x="535" y="545" width="175" height="30" rx="2"/>
+    <text class="tag" x="622" y="560">STATE_DELTA regions</text>
+    <rect class="tag-bg" x="275" y="750" width="92" height="30" rx="2"/>
+    <text class="tag" x="321" y="765">callTool</text>
+    <rect class="tag-bg" x="385" y="750" width="145" height="30" rx="2"/>
+    <text class="tag" x="457" y="765">structured result</text>
+  </g>
+</svg>

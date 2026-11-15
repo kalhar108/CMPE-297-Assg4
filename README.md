@@ -1,3 +1,5 @@
+![GenUX Architecture](genux-architecture-diagram.svg)
+
 # GenUX Technologies Suite: Generative User Experience Framework & Architecture
 
 [![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)](https://www.python.org/downloads/)
