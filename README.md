@@ -59,12 +59,13 @@ Every technology is implemented across four modes:
 - **Virtual Environment**: Recommended under `.venv`
 
 ```bash
-# Clone and navigate to assignment directory
-cd Special-Topics-in-AI/assignment-4-genux
+# Clone and navigate to this assignment repository
+git clone https://github.com/kalhar108/CMPE-297-Assg4.git
+cd CMPE-297-Assg4
 
 # Activate virtual environment
 # Windows PowerShell:
-& "..\e2e adk agents\.venv\Scripts\Activate.ps1"
+& ".\.venv\Scripts\Activate.ps1"
 # Linux / macOS:
 source .venv/bin/activate
 
@@ -128,7 +129,7 @@ python demo_suite.py --codelab all --mode all --live
 ## Directory Layout
 
 ```
-Special-Topics-in-AI/assignment-4-genux/
+CMPE-297-Assg4/
 ├── common/                               # Shared dual-mode LLM provider and schemas
 │   ├── config.py                         # GenUXExecutionConfig auto-sensing
 │   ├── llm_provider.py                   # BaseModelProvider, GeminiLive, DeterministicMock
