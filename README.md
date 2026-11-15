@@ -4,53 +4,7 @@
 [![Tests Passing](https://img.shields.io/badge/tests-44%2F44%20passed%20(100%25)-brightgreen.svg)]()
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> **San Jose State University — Fall 2026 Special Topics in AI (Assignment 4)**  
-> Comprehensive implementation and progressive pedagogical suite demonstrating the six leading Generative User Experience (GenUX) architectures across all four operational modes (24 configurations total), supported by a 4-tier automated test harness and a unified master CLI runner.
-
----
-
-## Architecture Overview
-
-```
-+---------------------------------------------------------------------------------------------------------+
-|                                  Unified CLI Entry Point & Demo Suite                                   |
-|                        (demo_suite.py --codelab all|01..06 --mode static|declarative|open_ended|mixed)   |
-+---------------------------------------------------------------------------------------------------------+
-                                                     |
-       +--------------------+------------------------+------------------------+-------------------+
-       |                    |                        |                        |                   |
-       v                    v                        v                        v                   v
-+--------------+   +----------------+   +-------------------------+   +-------------------+  +------------+
-| Codelab 01   |   | Codelab 02     |   | Codelab 03              |   | Codelab 04        |  | Codelab 05 |
-| A2UI Protocol|   | AG-UI Stream   |   | MCP Apps (SEP-1865)     |   | JSON Render       |  | OpenUI Lang|
-| v0.9.1       |   | SSE & State    |   | FastMCP + Host UI       |   | Streaming Patches |  | DSL Parser |
-+--------------+   +----------------+   +-------------------------+   +-------------------+  +------------+
-       |                    |                        |                        |                   |
-       +--------------------+------------------------+------------------------+-------------------+
-                                                     |
-                                                     v
-                                       +----------------------------+
-                                       | Codelab 06                 |
-                                       | Harness Integration        |
-                                       | Autonomous render_ui Loop  |
-                                       +----------------------------+
-                                                     |
-+---------------------------------------------------------------------------------------------------------+
-|                                    Shared Core Engine (common/)                                         |
-|        Dual-Mode Client: Live Gemini API (google-genai) <---> Deterministic Offline Mock Fallback        |
-+---------------------------------------------------------------------------------------------------------+
-                                                     |
-+---------------------------------------------------------------------------------------------------------+
-|                                   Automated Test Harness (tests/)                                       |
-|               Tier 1: Feature Matrix (24 modes)  |  Tier 2: Boundary & Corner Cases (12 tests)           |
-|               Tier 3: Cross-Feature Interactions |  Tier 4: Real-World Lecture Workflows                |
-|                                pytest.ini with --basetemp=.pytest_tmp                                   |
-+---------------------------------------------------------------------------------------------------------+
-```
-
----
-
-## The Six GenUX Technologies
+## The 6 GenUX Technologies
 
 1. **Codelab 1: A2UI Protocol v0.9.1 (`01_a2ui/`)**
    - Google's Agent-to-UI wire envelope protocol (`createSurface`, `updateComponents`, `updateDataModel`, `deleteSurface`).
