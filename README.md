@@ -8,6 +8,8 @@
 
 ## The 6 GenUX Technologies
 
+**Video Link** : https://youtu.be/Ir5HwWvldIs?is=xvdd_qiuolLNbGGC
+
 1. **Codelab 1: A2UI Protocol v0.9.1 (`01_a2ui/`)**
    - Google's Agent-to-UI wire envelope protocol (`createSurface`, `updateComponents`, `updateDataModel`, `deleteSurface`).
    - Strict separation of flat component hierarchies from state via **RFC 6901 JSON Pointers** with `~1` and `~0` escaping.
